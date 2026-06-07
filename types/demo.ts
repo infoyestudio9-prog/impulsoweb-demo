@@ -22,7 +22,10 @@ export type Demo = {
   instagram?: string;
   description?: string;
   services: string[];
-  photos: DemoPhoto[];
+  heroPhoto?: DemoPhoto;
+  galleryPhotos?: DemoPhoto[];
+  teamPhoto?: DemoPhoto;
+  photos?: DemoPhoto[];
   rating?: string;
   reviewCount?: number;
   trustItems?: TrustItem[];

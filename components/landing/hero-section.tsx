@@ -1,12 +1,12 @@
-import type { Demo } from "@/types/demo";
+import type { Demo, DemoPhoto } from "@/types/demo";
 import { WhatsAppButton } from "./whatsapp-button";
 
 type HeroSectionProps = {
   demo: Demo;
+  heroPhoto: DemoPhoto;
 };
 
-export function HeroSection({ demo }: HeroSectionProps) {
-  const heroPhoto = demo.photos[0];
+export function HeroSection({ demo, heroPhoto }: HeroSectionProps) {
   const location = [demo.neighborhood, demo.city].filter(Boolean).join(", ");
   const highlights = [
     "Cortes clásicos y modernos",

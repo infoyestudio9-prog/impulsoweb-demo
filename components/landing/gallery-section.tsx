@@ -28,15 +28,17 @@ export function GallerySection({ businessName, photos }: GallerySectionProps) {
           {photos.slice(0, 5).map((photo, index) => (
             <figure
               key={photo.src}
-              className={`overflow-hidden bg-[#171717] ${
+              className={`flex items-center justify-center overflow-hidden border border-[#171717]/10 bg-[#171717] p-1 shadow-[0_10px_34px_rgba(23,23,23,0.08)] ${
                 index === 0 ? "sm:col-span-2 lg:row-span-2" : ""
               }`}
             >
               <img
                 src={photo.src}
                 alt={photo.alt}
-                className={`w-full object-cover transition duration-500 hover:scale-[1.03] ${
-                  index === 0 ? "h-[420px]" : "h-[260px]"
+                className={`h-full w-full object-contain ${
+                  index === 0
+                    ? "min-h-[360px] max-h-[520px] sm:min-h-[460px] lg:min-h-[532px]"
+                    : "min-h-[260px] max-h-[320px]"
                 }`}
               />
             </figure>

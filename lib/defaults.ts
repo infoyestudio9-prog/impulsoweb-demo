@@ -8,11 +8,12 @@ export const defaultBarberServices = [
   "Perfilado",
 ];
 
-export const defaultBarberPhotos: DemoPhoto[] = [
-  {
-    src: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1400&q=85",
-    alt: "Cliente con corte moderno terminado",
-  },
+export const defaultBarberHeroPhoto: DemoPhoto = {
+  src: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1400&q=85",
+  alt: "Cliente con corte moderno terminado",
+};
+
+export const defaultBarberGalleryPhotos: DemoPhoto[] = [
   {
     src: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1200&q=85",
     alt: "Resultado final de corte masculino en barbería",
@@ -29,6 +30,11 @@ export const defaultBarberPhotos: DemoPhoto[] = [
     src: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=85",
     alt: "Ambiente profesional de barbería",
   },
+];
+
+export const defaultBarberPhotos: DemoPhoto[] = [
+  defaultBarberHeroPhoto,
+  ...defaultBarberGalleryPhotos,
 ];
 
 export const defaultBarberTrustItems: TrustItem[] = [

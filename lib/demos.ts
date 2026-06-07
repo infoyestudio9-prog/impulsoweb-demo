@@ -1,29 +1,50 @@
 import { defaultBarberTrustItems } from "@/lib/defaults";
 import type { Demo } from "@/types/demo";
+import { existsSync } from "fs";
+import { join } from "path";
 
-function createLocalPhotos(slug: string, businessName: string) {
-  return [
-    {
+function createLocalDemoPhotos(
+  slug: string,
+  businessName: string,
+  maxGalleryCount = 5,
+) {
+  const teamFileName = "team.jpg";
+  const teamPhoto = existsSync(
+    join(process.cwd(), "public", "demos", slug, teamFileName),
+  )
+    ? {
+        src: `/demos/${slug}/${teamFileName}`,
+        alt: `Equipo de ${businessName}`,
+      }
+    : undefined;
+  const galleryPhotos = Array.from(
+    { length: maxGalleryCount },
+    (_, index) => {
+      const photoNumber = index + 1;
+      const fileName = `gallery-${photoNumber}.jpg`;
+
+      return {
+        fileName,
+        photo: {
+          src: `/demos/${slug}/${fileName}`,
+          alt: `Galería ${photoNumber} de ${businessName}`,
+        },
+      };
+    },
+  )
+    .filter(({ fileName }) =>
+      existsSync(join(process.cwd(), "public", "demos", slug, fileName)),
+    )
+    .map(({ photo }) => photo);
+
+  return {
+    heroPhoto: {
       src: `/demos/${slug}/hero.jpg`,
       alt: `Resultado final de corte en ${businessName}`,
     },
-    {
-      src: `/demos/${slug}/gallery-1.jpg`,
-      alt: `Corte masculino en ${businessName}`,
-    },
-    {
-      src: `/demos/${slug}/gallery-2.jpg`,
-      alt: `Arreglo de barba en ${businessName}`,
-    },
-    {
-      src: `/demos/${slug}/gallery-3.jpg`,
-      alt: `Herramientas y detalle de barbería en ${businessName}`,
-    },
-    {
-      src: `/demos/${slug}/gallery-4.jpg`,
-      alt: `Ambiente de ${businessName}`,
-    },
-  ];
+    galleryPhotos,
+    teamPhoto,
+  };
 }
 
 function createTrustItems({
@@ -71,7 +92,7 @@ export const classicBarberStudioDemo: Demo = {
     "Afeitado tradicional",
     "Perfilado",
   ],
-  photos: createLocalPhotos("classic-barber-studio", "Classic Barber Studio"),
+  ...createLocalDemoPhotos("classic-barber-studio", "Classic Barber Studio"),
   rating: "5.0",
   reviewCount: 5,
   trustItems: defaultBarberTrustItems,
@@ -97,7 +118,7 @@ export const barberiaMmDemo: Demo = {
     "Tratamientos",
     "Productos barbería",
   ],
-  photos: createLocalPhotos("barberia-m-m", "Barbería M&M"),
+  ...createLocalDemoPhotos("barberia-m-m", "Barbería M&M"),
   trustItems: createTrustItems({
     neighborhood: "Bella Vista",
     address: "Av. Agraciada 3056",
@@ -126,7 +147,7 @@ export const grimaldiStudioDemo: Demo = {
     "Color",
     "Cursos barberos",
   ],
-  photos: createLocalPhotos("grimaldi-studio", "Grimaldi Studio"),
+  ...createLocalDemoPhotos("grimaldi-studio", "Grimaldi Studio"),
   trustItems: createTrustItems({
     neighborhood: "Paso de la Arena",
     address: "Av. Luis Batlle Berres 6594",
@@ -155,7 +176,7 @@ export const progressHairStudioDemo: Demo = {
     "Productos barbería",
     "Insumos barbería",
   ],
-  photos: createLocalPhotos("progress-hair-studio", "Progress Hair Studio"),
+  ...createLocalDemoPhotos("progress-hair-studio", "Progress Hair Studio"),
   trustItems: createTrustItems({
     neighborhood: "Paso Molino",
     address: "San Quintín 4280",
